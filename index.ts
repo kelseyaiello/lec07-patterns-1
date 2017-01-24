@@ -8,9 +8,14 @@ let ducks:Duck[] = [];
 ducks.push(mallard);
 ducks.push(new Ducks.RedheadDuck());
 ducks.push(new Ducks.TealDuck());
+ducks.push(new Ducks.RubberDuck());
+ducks.push(new Ducks.DecoyDuck());
+
+//ducks[3].flyBehavior
 
 //have them all act!
 ducks.forEach( (duck:Duck) => {
   console.log(duck.display());
   duck.quack();
+  duck.fly();
 });

@@ -4,14 +4,48 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var CanFlyBehavior = (function () {
+    function CanFlyBehavior() {
+    }
+    CanFlyBehavior.prototype.fly = function () {
+        console.log("Flies!");
+    };
+    return CanFlyBehavior;
+}());
+var NoFlyBehavior = (function () {
+    function NoFlyBehavior() {
+    }
+    NoFlyBehavior.prototype.fly = function () {
+        console.log("Does not fly!");
+    };
+    return NoFlyBehavior;
+}());
+var behavior = new NoFlyBehavior();
+behavior.fly();
+/**
+ * A class that represents a Duck.
+ * Intended to be extended to specific species. <-- design details
+ */
 var Duck = (function () {
     function Duck() {
+        this.flyBehavior = new CanFlyBehavior();
     }
+    /**
+     * Has the duck make a sound
+     */
     Duck.prototype.quack = function () {
         console.log("quack!");
     };
+    /**
+     * Has a duck swim.
+     * @param distance how far to swim
+     */
     Duck.prototype.swim = function (distance) {
-        console.log("Swims the " + distance + "m duckstyle.");
+        console.log("Swims the " + distance + "m duckstyle."); //prints a message about swimming
+    };
+    Duck.prototype.fly = function () {
+        //console.log("Flies away");
+        this.flyBehavior.fly();
     };
     return Duck;
 }());
@@ -19,7 +53,7 @@ exports.Duck = Duck;
 var RedheadDuck = (function (_super) {
     __extends(RedheadDuck, _super);
     function RedheadDuck() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        return _super.apply(this, arguments) || this;
     }
     RedheadDuck.prototype.display = function () {
         return "Looks like a RedHead";
@@ -30,7 +64,7 @@ exports.RedheadDuck = RedheadDuck;
 var MallardDuck = (function (_super) {
     __extends(MallardDuck, _super);
     function MallardDuck() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        return _super.apply(this, arguments) || this;
     }
     MallardDuck.prototype.display = function () {
         return "Looks like a Mallard";
@@ -41,7 +75,7 @@ exports.MallardDuck = MallardDuck;
 var TealDuck = (function (_super) {
     __extends(TealDuck, _super);
     function TealDuck() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        return _super.apply(this, arguments) || this;
     }
     TealDuck.prototype.display = function () {
         return "Looks like a Teal";
@@ -52,7 +86,9 @@ exports.TealDuck = TealDuck;
 var RubberDuck = (function (_super) {
     __extends(RubberDuck, _super);
     function RubberDuck() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
+        _this.flyBehavior = new NoFlyBehavior();
+        return _this;
     }
     RubberDuck.prototype.quack = function () {
         console.log('squeek!');
@@ -60,6 +96,26 @@ var RubberDuck = (function (_super) {
     RubberDuck.prototype.display = function () {
         return "A rubber ducky!";
     };
+    //does not fly
+    RubberDuck.prototype.fly = function () { };
+    RubberDuck.prototype.display = function () {
+        return "Looks like a duck, but isn't";
+    };
     return RubberDuck;
 }(Duck));
 exports.RubberDuck = RubberDuck;
+var DecoyDuck = (function (_super) {
+    __extends(DecoyDuck, _super);
+    function DecoyDuck() {
+        var _this = _super.call(this) || this;
+        _this.flyBehavior = new NoFlyBehavior();
+        return _this;
+    }
+    DecoyDuck.prototype.quack = function () { };
+    DecoyDuck.prototype.fly = function () { };
+    DecoyDuck.prototype.display = function () {
+        return "Looks like a duck, but isn't";
+    };
+    return DecoyDuck;
+}(Duck));
+exports.DecoyDuck = DecoyDuck;
